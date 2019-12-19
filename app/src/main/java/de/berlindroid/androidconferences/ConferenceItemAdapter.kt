@@ -1,27 +1,31 @@
 package de.berlindroid.androidconferences
 
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
-import android.widget.TextView
+import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.recyclerview.widget.RecyclerView
 
-class ConferenceItemAdapter(val conference: List<Conference>) : RecyclerView.Adapter<ConferenceItem>() {
+class ConferenceItemAdapter(
+    private val conferences: List<Conference>
+) : RecyclerView.Adapter<ConferenceItemViewHolder>() {
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ConferenceItem {
-        val v = LayoutInflater.from(parent.context)
-            .inflate(R.layout.conference_item, parent, false) as TextView
-        return ConferenceItem(v)
+    ): ConferenceItemViewHolder {
+        val view = LayoutInflater
+            .from(parent.context)
+            .inflate(R.layout.conference_item, parent, false) as LinearLayout
+
+        return ConferenceItemViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return 1
+        return conferences.size
     }
 
-    override fun onBindViewHolder(holder: ConferenceItem, position: Int) {
-        val item = conference[position]
-        holder.textView.text = item.title
-
+    override fun onBindViewHolder(holder: ConferenceItemViewHolder, position: Int) {
+        val item = conferences[position]
+        holder.update(item)
     }
 }
