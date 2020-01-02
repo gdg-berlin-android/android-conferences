@@ -17,9 +17,9 @@ class MainActivity : AppCompatActivity() {
 
         recycler.adapter = ConferenceItemAdapter(
             listOf(
-                Conference("Conference A"),
-                Conference("Conference B"),
-                Conference("Conference C")
+                ConferenceUi("Conference A"),
+                ConferenceUi("Conference B"),
+                ConferenceUi("Conference C")
             )
         )
     }

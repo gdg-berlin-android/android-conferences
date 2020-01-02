@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-data class Conference(
+data class ConferenceUi(
     var title: String
 )
 
@@ -15,7 +15,7 @@ class ConferenceItemViewHolder(root: View) : RecyclerView.ViewHolder(root) {
     private val cfpText: TextView = root.findViewById(R.id.callForParticipation)
     private val linkText: TextView = root.findViewById(R.id.link)
 
-    fun update(model: Conference) {
+    fun update(model: ConferenceUi) {
         nameText.text = model.title
     }
 }

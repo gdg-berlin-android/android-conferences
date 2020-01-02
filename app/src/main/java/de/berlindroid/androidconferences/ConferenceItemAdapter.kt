@@ -6,7 +6,7 @@ import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 
 class ConferenceItemAdapter(
-    private val conferences: List<Conference>
+    private val conferenceUis: List<ConferenceUi>
 ) : RecyclerView.Adapter<ConferenceItemViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -21,11 +21,11 @@ class ConferenceItemAdapter(
     }
 
     override fun getItemCount(): Int {
-        return conferences.size
+        return conferenceUis.size
     }
 
     override fun onBindViewHolder(holder: ConferenceItemViewHolder, position: Int) {
-        val item = conferences[position]
+        val item = conferenceUis[position]
         holder.update(item)
     }
 }
