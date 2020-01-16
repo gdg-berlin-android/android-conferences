@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Android Conferences</string>
+    <string name="cfp_or_conference_dialog_message">Do you want to open the conference or the call for participation
+        link?
+    </string>
+    <string name="cfp_or_conference_dialog_cfp_button">CFP</string>
+    <string name="cfp_or_conference_dialog_conference_button">Conference</string>
 </resources>

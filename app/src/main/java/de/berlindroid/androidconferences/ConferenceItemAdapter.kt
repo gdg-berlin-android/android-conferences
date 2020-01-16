@@ -2,7 +2,6 @@ package de.berlindroid.androidconferences
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 
 class ConferenceItemAdapter(
@@ -15,7 +14,7 @@ class ConferenceItemAdapter(
     ): ConferenceItemViewHolder {
         val view = LayoutInflater
             .from(parent.context)
-            .inflate(R.layout.conference_item, parent, false) as LinearLayout
+            .inflate(R.layout.conference_item, parent, false)
 
         return ConferenceItemViewHolder(view)
     }

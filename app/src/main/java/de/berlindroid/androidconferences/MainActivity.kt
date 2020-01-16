@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
                 is Failure -> showError(state.throwable)
                 is Success -> showConferences(state.conferences)
                 Loading -> TODO()
-            }.exhausive
+            }.exhaustive
         }
     }
 
@@ -55,8 +55,14 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-val Any?.exhausive get() = Unit
+val Any?.exhaustive get() = Unit
 
 private fun List<ConferenceApi>.toUi(): List<ConferenceUi> = this.map {
-    ConferenceUi(it.name)
+    ConferenceUi(
+        title = it.name,
+        link = it.link,
+        place = it.place,
+        date = it.date,
+        cfpLink = it.cfp?.url
+    )
 }

@@ -27,7 +27,6 @@ class ConferenceViewModel : ViewModel() {
                     state.postValue(Success(body))
                 }
             )
-
     }
 
 }

@@ -14,7 +14,16 @@ interface ConferencesApi {
 }
 
 data class ConferenceApi(
-    var name: String,
-    var place: String
-)
+    val name: String,
+    val place: String,
+    val date: String,
+    val link: String,
+    val cfp: CallForParticipation?
+) {
+    data class CallForParticipation(
+        val from: String,
+        val to: String,
+        val url: String
+    )
+}
 
