@@ -3,6 +3,7 @@ package de.berlindroid.androidconferences
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import de.berlindroid.androidconferences.ConferenceState.Failure
+import de.berlindroid.androidconferences.ConferenceState.Loading
 import de.berlindroid.androidconferences.ConferenceState.Success
 
 sealed class ConferenceState {
@@ -15,7 +16,7 @@ sealed class ConferenceState {
 
 class ConferenceViewModel : ViewModel() {
     private val service = ConferenceService()
-    val state: MutableLiveData<ConferenceState> = MutableLiveData()
+    val state: MutableLiveData<ConferenceState> = MutableLiveData(Loading)
 
     init {
         service

@@ -6,41 +6,42 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import de.berlindroid.androidconferences.ConferenceState.*
+import de.berlindroid.androidconferences.ConferenceState.Failure
+import de.berlindroid.androidconferences.ConferenceState.Loading
+import de.berlindroid.androidconferences.ConferenceState.Success
+import de.berlindroid.androidconferences.databinding.ActivityMainBinding
+
+private const val MAIN_TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
-    companion object {
-        const val TAG = "MainActivity"
-    }
-
+    private lateinit var binding: ActivityMainBinding
     private lateinit var vm: ConferenceViewModel
-
-    lateinit var recycler: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         vm = ViewModelProviders
             .of(this)
             .get(ConferenceViewModel::class.java)
 
-        recycler = findViewById(R.id.recycler)
-        recycler.layoutManager = LinearLayoutManager(this)
+        binding.recycler.layoutManager = LinearLayoutManager(this)
 
-        vm.state.observeForever { state ->
-            when (state) {
-                is Failure -> showError(state.throwable)
-                is Success -> showConferences(state.conferences)
-                Loading -> TODO()
-            }.exhaustive
-        }
+        vm
+            .state
+            .observeForever { state ->
+                when (state) {
+                    is Failure -> showError(state.throwable)
+                    is Success -> showConferences(state.conferences)
+                    is Loading -> showLoading()
+                }.exhaustive
+            }
     }
 
     private fun showError(throwable: Throwable) {
         val message = "An error happened \uD83D\uDCA5."
-        Log.d(TAG, message, throwable)
+        Log.d(MAIN_TAG, message, throwable)
 
         Toast
             .makeText(
@@ -51,7 +52,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showConferences(list: List<ConferenceApi>) {
-        recycler.adapter = ConferenceItemAdapter(list.toUi())
+        binding
+            .recycler
+            .adapter = ConferenceItemAdapter(list.toUi())
+    }
+
+    private fun showLoading() {
+
     }
 }
 

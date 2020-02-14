@@ -4,11 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.view.View
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-
+import de.berlindroid.androidconferences.databinding.ConferenceItemBinding
 
 data class ConferenceUi(
     val title: String,
@@ -19,19 +18,16 @@ data class ConferenceUi(
 )
 
 class ConferenceItemViewHolder(root: View) : RecyclerView.ViewHolder(root) {
-    private val nameText: TextView = root.findViewById(R.id.name)
-    private val placeText: TextView = root.findViewById(R.id.place)
-    private val dateText: TextView = root.findViewById(R.id.date)
-    private val cfp: TextView = root.findViewById(R.id.callForParticipation)
+    private var binding: ConferenceItemBinding = ConferenceItemBinding.bind(root)
 
-    fun update(model: ConferenceUi) {
-        nameText.text = model.title
-        placeText.text = model.place
-        dateText.text = model.date
+    fun update(model: ConferenceUi) = binding.apply {
+        name.text = model.title
+        place.text = model.place
+        date.text = model.date
 
-        cfp.visibility = if (model.cfpLink.isNullOrBlank()) View.GONE else View.VISIBLE
+        callForParticipation.visibility = if (model.cfpLink.isNullOrBlank()) View.GONE else View.VISIBLE
 
-        itemView.setOnClickListener {
+        root.setOnClickListener {
             if (model.cfpLink.isNullOrBlank()) {
                 openLink(itemView.context, model.link)
             } else {
