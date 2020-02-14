@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
 
 val Any?.exhaustive get() = Unit
 
-private fun List<ConferenceApi>.toUi(): List<ConferenceUi> = this.map {
+internal fun List<ConferenceApi>.toUi(): List<ConferenceUi> = map {
     ConferenceUi(
         title = it.name,
         link = it.link,

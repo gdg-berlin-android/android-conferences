@@ -2,9 +2,11 @@ package de.berlindroid.androidconferences
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import de.berlindroid.androidconferences.ConferenceState.Failure
 import de.berlindroid.androidconferences.ConferenceState.Loading
 import de.berlindroid.androidconferences.ConferenceState.Success
+import kotlinx.coroutines.launch
 
 sealed class ConferenceState {
     object Loading : ConferenceState()
@@ -14,20 +16,20 @@ sealed class ConferenceState {
     data class Success(val conferences: List<ConferenceApi>) : ConferenceState()
 }
 
-class ConferenceViewModel : ViewModel() {
-    private val service = ConferenceService()
+class ConferenceViewModel(private val service: ConferenceService = ConferenceService()) : ViewModel() {
     val state: MutableLiveData<ConferenceState> = MutableLiveData(Loading)
 
-    init {
-        service
-            .fetchConferences(
-                onError = { throwable ->
-                    state.postValue(Failure(throwable))
-                },
-                onSuccess = { body ->
-                    state.postValue(Success(body))
-                }
-            )
+    fun getData() {
+        viewModelScope.launch {
+            try {
+                state.postValue(
+                    Success(
+                        service.fetchConferences()
+                    )
+                )
+            } catch (th: Throwable) {
+                state.postValue(Failure(th))
+            }
+        }
     }
-
 }
